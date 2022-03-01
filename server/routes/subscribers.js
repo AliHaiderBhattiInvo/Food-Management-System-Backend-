@@ -19,14 +19,69 @@ router.post("/get/subscried-user", async (req, res) => {
 
 router.post("/subscribe", async (req, res) => {
   try {
-    const subscriber = await subscriberModel.create({
-      user_id: req.body.user_id,
-      dish_id: req.body.dish_id,
-      dates: req.body.dates,
+    const user = await subscriberModel.findOne({
+      where: {
+        user_id: req.body.user_id,
+      },
     });
-    res.status(200).json(subscriber);
+    if (!user) {
+      const subscriber = await subscriberModel.create({
+        user_id: req.body.user_id,
+        dish_id: req.body.dish_id,
+        dates: req.body.dates,
+      });
+      res.status(200).json(subscriber);
+    } else {
+      const subscriber = await subscriberModel.update(
+        {
+          user_id: req.body.user_id,
+          dish_id: req.body.dish_id,
+          dates: req.body.dates,
+        },
+        {
+          where: {
+            user_id: req.body.user_id,
+          },
+        }
+      );
+      res.status(200).json(subscriber);
+    }
   } catch (error) {
     res.status(500).send(error);
+  }
+});
+
+router.put("/opt-meal", async (req, res) => {
+  try {
+    console.log("try me aya");
+    const user = await subscriberModel.findOne({
+      where: {
+        user_id: req.body.user_id,
+      },
+    });
+    if (user) {
+      console.log("if me aya");
+      let index = user.dates.findIndex((item) => {
+        return item.meal == req.body.body.meal;
+      });
+      Object.assign(user.dates[index], req.body.body);
+      console.log("user.dates", user.dates);
+      await subscriberModel.update(
+        {
+          user_id: user.user_id,
+          dish_id: user.dish_id,
+          dates: user.dates,
+        },
+        {
+          where: {
+            user_id: req.body.user_id,
+          },
+        }
+      );
+      res.status(200).json(user);
+    }
+  } catch (error) {
+    res.status(500).json(error);
   }
 });
 
