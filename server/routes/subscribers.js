@@ -44,7 +44,13 @@ router.post("/subscribe", async (req, res) => {
           },
         }
       );
-      res.status(200).json(subscriber);
+      const resUser = await subscriberModel.findOne({
+          where: {
+              user_id: req.body.user_id
+          }
+      })
+      console.log("subs", subscriber)
+      res.status(200).json(resUser);
     }
   } catch (error) {
     res.status(500).send(error);

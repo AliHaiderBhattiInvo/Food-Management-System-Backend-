@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const authRoutes = require("./server/routes/auth");
 const dishesRoutes = require("./server/routes/dishes");
 const subscribeRoutes = require("./server/routes/subscribers")
+const invoiceRoutes = require("./server/routes/invoices")
 const cors = require("cors");
 
 // Set up the express app
@@ -21,6 +22,7 @@ app.use("/server/images", express.static("server/images"));
 app.use("/api", authRoutes);
 app.use("/api/dishes", dishesRoutes);
 app.use("/api", subscribeRoutes);
+app.use("/api", invoiceRoutes)
 
 
 
