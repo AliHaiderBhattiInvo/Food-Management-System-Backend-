@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     dish_id: DataTypes.INTEGER,
     total_meals: DataTypes.INTEGER,
     total_amount: DataTypes.INTEGER,
-    proof_payment: DataTypes.STRING
+    proof_payment: DataTypes.STRING,
+    status: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Invoices',

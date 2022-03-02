@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const authRoutes = require("./server/routes/auth");
+const userRoutes = require("./server/routes/users")
 const dishesRoutes = require("./server/routes/dishes");
 const subscribeRoutes = require("./server/routes/subscribers")
 const invoiceRoutes = require("./server/routes/invoices")
@@ -20,6 +21,7 @@ app.use(express.static(__dirname + "/public"));
 app.use("/server/images", express.static("server/images"));
 
 app.use("/api", authRoutes);
+app.use("/api", userRoutes)
 app.use("/api/dishes", dishesRoutes);
 app.use("/api", subscribeRoutes);
 app.use("/api", invoiceRoutes)

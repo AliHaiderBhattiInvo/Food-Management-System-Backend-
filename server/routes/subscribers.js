@@ -91,4 +91,13 @@ router.put("/opt-meal", async (req, res) => {
   }
 });
 
+router.get('/subscribed-users', async(req, res) => {
+  try {
+    const users = await subscriberModel.findAll()
+    res.status(200).json(users)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+})
+
 module.exports = router;
